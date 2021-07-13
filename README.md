@@ -27,5 +27,5 @@ npm start # start client
 - I wish I did some test cases for both BE and FE
 - Send any updates to the schedule for Backend
 - Being able to filter by Role or Employee would make user experience better
-- Error handling in the backend
+- Error handling in the backend (and FE)
 - Only display employees which are rostered for the specified timeframe (this wasn't possible due to library limitations)
