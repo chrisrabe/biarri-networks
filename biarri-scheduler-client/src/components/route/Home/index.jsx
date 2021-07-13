@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import Header from 'components/common/Header';
-import Scheduler from 'devextreme-react/scheduler';
 import { Body } from './styles';
 import RoleDetails from './RoleDetails/container';
-
-const views = ['day', 'month', 'week'];
+import Roster from './Roster';
 
 const Home = (props) => {
   const { getRoles, getShifts } = props;
@@ -19,7 +17,7 @@ const Home = (props) => {
       <Header />
       <Body>
         <RoleDetails />
-        <Scheduler views={views} />
+        <Roster />
       </Body>
     </div>
   );
