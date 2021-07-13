@@ -41,7 +41,8 @@ const schedulerSlice = createSlice({
     // getRoles lifecycle handlers
     builder.addCase(getRoles.fulfilled, (state, action) => {
       if (action.payload) {
-        state.roles = action.payload;
+        const { roles } = action.payload;
+        state.roles = roles;
         state.isFetchingRoles = false;
       }
     });
@@ -61,7 +62,8 @@ const schedulerSlice = createSlice({
     // getShift lifecycle handlers
     builder.addCase(getShifts.fulfilled, (state, action) => {
       if (action.payload) {
-        state.shifts = action.payload;
+        const { shifts } = action.payload;
+        state.shifts = shifts;
         state.isFetchingShifts = false;
       }
     });
