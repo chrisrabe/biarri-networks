@@ -1,0 +1,34 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Employee {
+  id         Int     @id @default(autoincrement())
+  last_name  String
+  first_name String
+  shifts     Shift[]
+}
+
+model Role {
+  id                Int     @id @default(autoincrement())
+  background_colour String
+  name              String
+  text_colour       String
+  shifts            Shift[]
+}
+
+model Shift {
+  id             Int      @id @default(autoincrement())
+  start_time     DateTime @default(now())
+  end_time       DateTime @default(now())
+  break_duration Int
+  employee_id    Int?
+  role_id        Int?
+  employee       Employee? @relation(fields: [employee_id], references: [id])
+  role           Role?     @relation(fields: [role_id], references: [id])
+}
