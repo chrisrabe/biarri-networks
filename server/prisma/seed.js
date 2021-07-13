@@ -7,7 +7,8 @@ const prisma = new PrismaClient();
 
 // Transform shifts into prisma schema
 
-const generatePrismaData = () => {
+// Generate employees
+const populateEmployees = async () => {
   const employeeData = employees.reduce((acc, item) => {
     acc[item.id] = {
       first_name: item.first_name,
@@ -15,6 +16,17 @@ const generatePrismaData = () => {
     };
     return acc;
   }, {});
+  for (const employee of employees) {
+    const data = employeeData[employee.id];
+    const createdData = await prisma.employee.create({
+      data,
+    });
+    data.prisma_id = createdData.id;
+  }
+  return employeeData;
+};
+
+const populateRoles = async () => {
   const roleData = roles.reduce((acc, item) => {
     acc[item.id] = {
       background_colour: item.background_colour,
@@ -23,8 +35,20 @@ const generatePrismaData = () => {
     };
     return acc;
   }, {});
+  for (const role of roles) {
+    const data = roleData[role.id];
+    const createdData = await prisma.role.create({
+      data,
+    });
+    data.prisma_id = createdData.id;
+  }
+  return roleData;
+};
 
-  const prismaData = shifts.map((shift) => {
+const populateDb = async () => {
+  const employeeMap = await populateEmployees();
+  const roleMap = await populateRoles();
+  const shiftData = shifts.map((shift) => {
     const data = {
       start_time: shift.start_time,
       end_time: shift.end_time,
@@ -32,21 +56,21 @@ const generatePrismaData = () => {
     };
     // map employee
     data.employee = {
-      create: employeeData[shift.employee_id],
+      connect: {
+        id: employeeMap[shift.employee_id].prisma_id,
+      },
     };
     data.role = {
-      create: roleData[shift.role_id],
+      connect: {
+        id: roleMap[shift.role_id].prisma_id,
+      },
     };
     return data;
   });
-
-  return prismaData;
-};
-
-const populateDb = async (items) => {
-  for (const item of items) {
+  // create shifts
+  for (const shift of shiftData) {
     await prisma.shift.create({
-      data: item,
+      data: shift,
       include: {
         employee: true,
         role: true,
@@ -55,8 +79,7 @@ const populateDb = async (items) => {
   }
 };
 
-const data = generatePrismaData();
-populateDb(data)
+populateDb()
   .catch((e) => {
     console.log(e);
     process.exit(1);
