@@ -1,17 +1,17 @@
-import Header from 'components/route/Home/Header';
-import Scheduler from 'devextreme-react/scheduler';
 import { useEffect } from 'react';
-import { getRoles } from 'api';
+import Header from 'components/common/Header';
+import Scheduler from 'devextreme-react/scheduler';
 import { Body } from './styles';
 
 const views = ['day', 'month', 'week'];
 
-const Home = () => {
+const Home = (props) => {
+  const { getRoles, getShifts } = props;
+
   useEffect(() => {
-    getRoles().then((res) => {
-      console.log(res);
-    });
-  }, []);
+    getRoles();
+    getShifts();
+  }, [getRoles, getShifts]);
 
   return (
     <div>

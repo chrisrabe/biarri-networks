@@ -1,12 +1,12 @@
+import config from 'config.json';
+
 import {
   HeaderText,
   HeaderContainer,
   LocationText,
   TimezoneText,
   LocationContainer,
-} from 'components/route/Home/Header/styles';
-
-import config from 'config.json';
+} from './styles';
 
 const Header = () => (
   <HeaderContainer>
