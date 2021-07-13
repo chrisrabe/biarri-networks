@@ -10,18 +10,24 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@prisma/client": "^2.26.0"
+    "@prisma/client": "^2.26.0",
+    "bunyan": "^1.8.15",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-async-handler": "^1.1.4",
+    "moment": "^2.29.1"
   },
   "devDependencies": {
     "eslint": "^7.30.0",
     "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.23.4",
     "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.23.4",
     "eslint-plugin-prettier": "^3.4.0",
-    "prettier": "^2.3.2",
-    "prisma": "^2.26.0",
     "husky": "^6.0.0",
-    "lint-staged": "^11.0.0"
+    "lint-staged": "^11.0.0",
+    "prettier": "^2.3.2",
+    "prisma": "^2.26.0"
   },
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
