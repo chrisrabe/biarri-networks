@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import PropTypes from 'prop-types';
-import Scheduler, { Resource, View } from 'devextreme-react/scheduler';
+import Scheduler, { Resource } from 'devextreme-react/scheduler';
 import config from 'config.json';
 import Shift from 'models/shift';
 import { getSchedulerData, getGroupingData, getRoleResource } from './utils';
@@ -8,6 +8,12 @@ import { getSchedulerData, getGroupingData, getRoleResource } from './utils';
 const views = [
   {
     type: 'day',
+    name: 'Day',
+    groupOrientation: 'horizontal',
+  },
+  {
+    type: 'week',
+    name: 'Week',
     groupOrientation: 'horizontal',
   },
 ];
@@ -27,14 +33,14 @@ const Roster = (props) => {
       dataSource={scheduleData}
       views={views}
       groups={groups}
+      defaultCurrentView="week"
     >
-      <View name="Day" type="day" groupOrientation="horizontal" />
-      <Resource dataSource={roleData} fieldExpr="roleId" useColorAsDefault />
       <Resource
         fieldExpr="employeeId"
         allowMultiple={false}
         dataSource={groupData}
       />
+      <Resource dataSource={roleData} fieldExpr="roleId" useColorAsDefault />
     </Scheduler>
   );
 };
