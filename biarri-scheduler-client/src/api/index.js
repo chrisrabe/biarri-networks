@@ -13,6 +13,18 @@ export const getRolesAPI = async () => {
   }
 };
 
+export const getEmployeeAPI = async () => {
+  try {
+    const url = '/api/v1/employee';
+    const { data } = await http.get(url);
+    return { data, success: 'Retrieved employees successfully' };
+  } catch (e) {
+    return {
+      error: errorHandler(e),
+    };
+  }
+};
+
 export const getShiftsAPI = async () => {
   try {
     const url = '/api/v1/shift';

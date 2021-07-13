@@ -2,15 +2,16 @@ import { useEffect } from 'react';
 import Header from 'components/common/Header';
 import { Body } from './styles';
 import RoleDetails from './RoleDetails/container';
-import Roster from './Roster';
+import Roster from './Roster/container';
 
 const Home = (props) => {
-  const { getRoles, getShifts } = props;
+  const { getRoles, getShifts, getEmployees } = props;
 
   useEffect(() => {
     getRoles();
     getShifts();
-  }, [getRoles, getShifts]);
+    getEmployees();
+  }, [getRoles, getShifts, getEmployees]);
 
   return (
     <div>

@@ -1,10 +1,21 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getRolesAPI, getShiftsAPI } from 'api';
+import { getRolesAPI, getShiftsAPI, getEmployeeAPI } from 'api';
 
 export const getRoles = createAsyncThunk(
   '/roles',
   async (payload, thunkAPI) => {
     const response = await getRolesAPI();
+    if (!response.success) {
+      thunkAPI.rejectWithValue(response);
+    }
+    return response.data;
+  },
+);
+
+export const getEmployees = createAsyncThunk(
+  '/employees',
+  async (payload, thunkAPI) => {
+    const response = await getEmployeeAPI();
     if (!response.success) {
       thunkAPI.rejectWithValue(response);
     }
@@ -28,8 +39,10 @@ const schedulerSlice = createSlice({
   initialState: {
     roles: [],
     shifts: [],
+    employees: [],
     isFetchingRoles: false,
     isFetchingShifts: false,
+    isFetchingEmployees: false,
     error: undefined,
   },
   reducers: {
@@ -77,6 +90,27 @@ const schedulerSlice = createSlice({
         const { error } = action.payload;
         state.isFetchingShifts = false;
         state.shifts = [];
+        state.error = error;
+      }
+    });
+    // getEmployee lifecycle handlers
+    builder.addCase(getEmployees.fulfilled, (state, action) => {
+      if (action.payload) {
+        const { employees } = action.payload;
+        state.employees = employees;
+        state.isFetchingEmployees = false;
+      }
+    });
+    builder.addCase(getEmployees.pending, (state) => {
+      state.isFetchingEmployees = true;
+      state.employees = [];
+      state.error = undefined;
+    });
+    builder.addCase(getEmployees.rejected, (state, action) => {
+      if (action.payload) {
+        const { error } = action.payload;
+        state.isFetchingEmployees = false;
+        state.employees = [];
         state.error = error;
       }
     });
