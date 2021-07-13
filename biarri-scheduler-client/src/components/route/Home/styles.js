@@ -1,7 +1,5 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-  padding: 20px;
+export const Body = styled.div`
+  padding: 2vmin 5vmin;
 `;

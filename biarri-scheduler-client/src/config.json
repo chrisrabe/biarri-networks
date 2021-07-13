@@ -1,4 +1,5 @@
 {
-    "timezone": "Australia/Perth",
-    "location": "Perth Shop"
+  "timezone": "Australia/Perth",
+  "location": "Perth Shop",
+  "baseUrl": "http://localhost:8080"
 }
